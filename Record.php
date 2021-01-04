@@ -15,9 +15,18 @@
 
 	class Record extends \Opcenter\Dns\Record
 	{
+		/**
+		 * Override broken TXT formatting in Vultr
+		 */
+		protected function formatTxt()
+		{
+			if ($this->parameter && $this->parameter[0] === '"' && $this->parameter[0] === $this->parameter[-1]) {
+				$this->parameter = '"' . trim($this->parameter, '"') . '"';
+			}
+		}
 
 		/**
-		 * Override broken CAA formatting in Linode
+		 * Override broken CAA formatting in Vultr
 		 */
 		protected function formatCaa()
 		{
